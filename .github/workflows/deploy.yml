@@ -1,0 +1,27 @@
+name: Deploy to github pages
+
+on:
+  push:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: github-pages
+    # only run steps if the workflow didn't fail
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+      - name: Use Node and enable cache
+        uses: actions/setup-node@v3
+        with:
+          node-version: 17
+          cache: 'npm'
+      - name: Install dependencies
+        run: |
+          npm ci
+      - run: npm run build
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build

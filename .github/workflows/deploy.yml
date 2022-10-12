@@ -7,7 +7,6 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     environment: github-pages
-    # only run steps if the workflow didn't fail
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v3
